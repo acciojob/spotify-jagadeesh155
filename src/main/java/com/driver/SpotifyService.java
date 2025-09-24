@@ -10,27 +10,22 @@ public class SpotifyService {
     @Autowired
     private SpotifyRepository spotifyRepository;
 
-    // ----------------- USER -----------------
     public User createUser(String name, String mobile){
         return spotifyRepository.createUser(name, mobile);
     }
 
-    // ----------------- ARTIST -----------------
-    public Artist createArtist(String name){  // fixed return type
+    public Artist createArtist(String name){
         return spotifyRepository.createArtist(name);
     }
 
-    // ----------------- ALBUM -----------------
     public Album createAlbum(String title, String artistName){
         return spotifyRepository.createAlbum(title, artistName);
     }
 
-    // ----------------- SONG -----------------
     public Song createSong(String title, String albumName, int length) throws Exception{
         return spotifyRepository.createSong(title, albumName, length);
     }
 
-    // ----------------- PLAYLIST -----------------
     public Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception{
         return spotifyRepository.createPlaylistOnLength(mobile, title, length);
     }
@@ -43,12 +38,10 @@ public class SpotifyService {
         return spotifyRepository.findPlaylist(mobile, playlistTitle);
     }
 
-    // ----------------- LIKE -----------------
     public Song likeSong(String mobile, String songTitle) throws Exception{
         return spotifyRepository.likeSong(mobile, songTitle);
     }
 
-    // ----------------- POPULAR -----------------
     public String mostPopularArtist(){
         return spotifyRepository.mostPopularArtist();
     }

@@ -1,24 +1,18 @@
 package com.driver;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Album {
     private String title;
     private Date releaseDate;
     private int likes;
-    private List<Album> albums;  // extra, optional
 
-    public Album() {
-        this.albums = new ArrayList<>();
-    }
+    public Album() {}
 
     public Album(String title) {
         this.title = title;
         this.releaseDate = new Date();
         this.likes = 0;
-        this.albums = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -43,13 +37,5 @@ public class Album {
 
     public void setLikes(int likes) {
         this.likes = likes;
-    }
-
-    public List<Album> getAlbums() {
-        return albums;
-    }
-
-    public void setAlbums(List<Album> albums) {
-        this.albums = albums;
     }
 }
