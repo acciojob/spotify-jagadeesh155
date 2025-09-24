@@ -11,7 +11,6 @@ public class SpotifyRepository {
     private HashMap<Playlist, List<Song>> playlistSongMap;
     private HashMap<Song, List<User>> songLikeMap;
 
-    // extra maps to maintain relationships
     private HashMap<Album, List<Song>> albumSongMap;
     private HashMap<Artist, List<Album>> artistAlbumMap;
     private HashMap<Song, Album> songAlbumMap;
@@ -41,25 +40,19 @@ public class SpotifyRepository {
         artists = new ArrayList<>();
     }
 
-    // ----------------- USER -----------------
     public User createUser(String name, String mobile) {
         User user = new User(name, mobile);
         users.add(user);
         return user;
     }
 
-    // ----------------- ARTIST ----------------
+    public Artist createArtist(String name) {
+        Artist artist = new Artist(name);
+        artists.add(artist);
+        artistAlbumMap.put(artist, new ArrayList<>());
+        return artist;
+    }
 
-        // ----------------- ARTIST -----------------
-        public Artist createArtist(String name){
-            Artist artist = new Artist(name);
-            artists.add(artist);
-            artistAlbumMap.put(artist, new ArrayList<>());
-            return artist;
-        }
-
-
-        // ----------------- ALBUM -----------------
     public Album createAlbum(String title, String artistName) {
         Artist artist = null;
         for (Artist a : artists) {
@@ -82,11 +75,10 @@ public class SpotifyRepository {
         return album;
     }
 
-    // ----------------- SONG -----------------
     public Song createSong(String title, String albumName, int length) throws Exception {
         Album album = null;
         for (Album a : albums) {
-            if (a.getName().equals(albumName)) {  // changed getTitle() → getName()
+            if (a.getTitle().equals(albumName)) {
                 album = a;
                 break;
             }
@@ -102,7 +94,6 @@ public class SpotifyRepository {
         return song;
     }
 
-    // ----------------- PLAYLIST -----------------
     public Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception {
         User user = getUser(mobile);
         if (user == null) throw new Exception("User does not exist");
@@ -134,9 +125,7 @@ public class SpotifyRepository {
 
         List<Song> playlistSongs = new ArrayList<>();
         for (Song s : songs) {
-            if (songTitles.contains(s.getTitle())) {
-                playlistSongs.add(s);
-            }
+            if (songTitles.contains(s.getTitle())) playlistSongs.add(s);
         }
         playlistSongMap.put(playlist, playlistSongs);
 
@@ -162,9 +151,8 @@ public class SpotifyRepository {
         }
         if (playlist == null) throw new Exception("Playlist does not exist");
 
-        if (creatorPlaylistMap.containsKey(user) && creatorPlaylistMap.get(user).equals(playlist)) {
+        if (creatorPlaylistMap.containsKey(user) && creatorPlaylistMap.get(user).equals(playlist))
             return playlist;
-        }
 
         List<User> listeners = playlistListenerMap.getOrDefault(playlist, new ArrayList<>());
         if (!listeners.contains(user)) {
@@ -175,7 +163,6 @@ public class SpotifyRepository {
         return playlist;
     }
 
-    // ----------------- LIKE SONG -----------------
     public Song likeSong(String mobile, String songTitle) throws Exception {
         User user = getUser(mobile);
         if (user == null) throw new Exception("User does not exist");
@@ -199,40 +186,36 @@ public class SpotifyRepository {
             Album album = songAlbumMap.get(song);
             if (album != null) {
                 Artist artist = albumArtistMap.get(album);
-                if (artist != null) {
-                    artist.setLikes(artist.getLikes() + 1);
-                }
+                if (artist != null) artist.setLikes(artist.getLikes() + 1);
             }
         }
         return song;
     }
 
-    // ----------------- POPULAR -----------------
     public String mostPopularArtist() {
         int max = -1;
-        String ans = "";
+        String name = "";
         for (Artist a : artists) {
             if (a.getLikes() > max) {
                 max = a.getLikes();
-                ans = a.getName();
+                name = a.getName();
             }
         }
-        return ans;
+        return name;
     }
 
     public String mostPopularSong() {
         int max = -1;
-        String ans = "";
+        String title = "";
         for (Song s : songs) {
             if (s.getLikes() > max) {
                 max = s.getLikes();
-                ans = s.getTitle();
+                title = s.getTitle();
             }
         }
-        return ans;
+        return title;
     }
 
-    // ----------------- HELPER -----------------
     private User getUser(String mobile) {
         for (User u : users) {
             if (u.getMobile().equals(mobile)) return u;

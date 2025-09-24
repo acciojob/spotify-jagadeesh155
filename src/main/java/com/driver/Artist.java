@@ -6,13 +6,13 @@ import java.util.List;
 public class Artist {
     private String name;
     private int likes;
-    private List<Album> albums; // ✅ Needed
+    private List<Album> albums;
 
-    public Artist(){
+    public Artist() {
         this.albums = new ArrayList<>();
     }
 
-    public Artist(String name){
+    public Artist(String name) {
         this.name = name;
         this.likes = 0;
         this.albums = new ArrayList<>();
