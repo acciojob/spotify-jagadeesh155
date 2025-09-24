@@ -1,34 +1,44 @@
 package com.driver;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Album {
-    private String title;
-    private Date releaseDate;
+    private String name;
+    private int likes;
+    private List<Album> albums; // ✅ Needed
 
     public Album(){
-
+        this.albums = new ArrayList<>();
     }
 
-    public Album(String title){
-        this.title = title;
-        this.releaseDate = new Date();
+    public Album(String name){
+        this.name = name;
+        this.likes = 0;
+        this.albums = new ArrayList<>();
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Date getReleaseDate() {
-        return releaseDate;
+    public int getLikes() {
+        return likes;
     }
 
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
     }
 }
